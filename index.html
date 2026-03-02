@@ -3,13 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0f131e" />
+
+  <!-- iOS Safari — 홈 화면 설치 필수 -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Captain's Logbook" />
+  <meta name="apple-mobile-web-app-title" content="Logbook" />
+
+  <!-- iOS 아이콘 (크기별) -->
+  <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152.png" />
+  <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-167.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <!-- iOS Splash / Safe area -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <style>
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #0f131e; }
+    body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+    #root { min-height: 100dvh; }
+  </style>
+
   <title>Captain's Logbook</title>
 </head>
-<body style="margin:0;padding:0;background:#0f1117">
+<body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script>
+    // Service Worker 등록
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(r => console.log('SW registered:', r.scope))
+          .catch(e => console.log('SW error:', e));
+      });
+    }
+  </script>
 </body>
 </html>
